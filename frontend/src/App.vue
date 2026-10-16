@@ -4,7 +4,7 @@
       <header class="sticky top-0 z-10 border-b border-outline-gray-2 bg-surface-base">
         <div class="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:gap-6">
           <router-link to="/" class="flex items-center gap-2 font-semibold text-ink-gray-9">
-            <span class="grid size-7 place-items-center rounded-3 bg-surface-gray-9 text-sm text-ink-gray-1">L</span>
+            <span class="grid size-7 place-items-center rounded-3 bg-surface-blue-6 text-sm text-ink-base">L</span>
             <span class="hidden sm:inline">LearnHub</span>
           </router-link>
           <nav class="flex gap-1">

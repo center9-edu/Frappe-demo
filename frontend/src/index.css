@@ -1,9 +1,61 @@
 @import 'frappe-ui/style.css';
 
+/* ── Brand theme ──────────────────────────────────────────────
+   frappe-ui colors every component through CSS variables, so pointing
+   the "blue" scale at "teal" rebrands every theme="blue" Button, Badge,
+   Alert... Teal has its own dark-mode values, so dark mode follows. */
+:root,
+[data-theme='dark'] {
+  --surface-blue-1: var(--surface-teal-1);
+  --surface-blue-2: var(--surface-teal-2);
+  --surface-blue-3: var(--surface-teal-3);
+  --surface-blue-4: var(--surface-teal-4);
+  --surface-blue-5: var(--surface-teal-5);
+  /* solid buttons paint bg-surface-blue-6/7/8 under white text: shift to darker teal for contrast */
+  --surface-blue-6: var(--surface-teal-8);
+  --surface-blue-7: var(--surface-teal-9);
+  --surface-blue-8: var(--surface-teal-10);
+  --surface-blue-9: var(--surface-teal-9);
+  --surface-blue-10: var(--surface-teal-10);
+  --ink-blue-1: var(--ink-teal-1);
+  --ink-blue-2: var(--ink-teal-2);
+  --ink-blue-3: var(--ink-teal-3);
+  --ink-blue-4: var(--ink-teal-4);
+  --ink-blue-5: var(--ink-teal-5);
+  --ink-blue-6: var(--ink-teal-6);
+  --ink-blue-7: var(--ink-teal-7);
+  --ink-blue-8: var(--ink-teal-8);
+  --ink-blue-9: var(--ink-teal-9);
+  --outline-blue-1: var(--outline-teal-1);
+  --outline-blue-2: var(--outline-teal-2);
+  --outline-blue-3: var(--outline-teal-3);
+  --outline-blue-4: var(--outline-teal-4);
+  --outline-blue-5: var(--outline-teal-5);
+  --outline-blue-6: var(--outline-teal-6);
+  --outline-blue-7: var(--outline-teal-7);
+  --outline-blue-8: var(--outline-teal-8);
+  --outline-blue-9: var(--outline-teal-9);
+  --outline-blue-10: var(--outline-teal-10);
+  --ink-blue-link: var(--ink-teal-7);
+}
+
+html,
+body {
+  font-family: 'Be Vietnam Pro', InterVar, system-ui, sans-serif;
+}
+
+/* Progress paints its bar with a fixed bg-surface-gray-10 (internal class),
+   so the brand color needs a targeted override. Re-check after upgrading frappe-ui. */
+.progress-brand .bg-surface-gray-10 {
+  background-color: var(--surface-blue-6);
+}
+
 .lesson-content { @apply text-base leading-7 text-ink-gray-8; }
 .lesson-content h1, .lesson-content h2, .lesson-content h3 { @apply mt-6 mb-2 font-semibold text-ink-gray-9; }
 .lesson-content p { @apply my-3; }
 .lesson-content ul { @apply my-3 list-disc pl-6; }
 .lesson-content ol { @apply my-3 list-decimal pl-6; }
 .lesson-content pre { @apply my-4 overflow-x-auto rounded-4 bg-surface-gray-2 p-4 text-sm; }
+.lesson-content code { @apply rounded-2 bg-surface-gray-2 px-1 text-sm; }
+.lesson-content pre code { @apply bg-transparent p-0; }
 .lesson-content a { @apply text-ink-blue-link underline; }

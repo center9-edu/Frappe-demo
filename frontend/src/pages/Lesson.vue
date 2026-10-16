@@ -5,7 +5,7 @@
       <router-link :to="{ name: 'Course', params: { course } }" class="mb-3 flex items-center gap-1 text-sm text-ink-gray-5 hover:text-ink-gray-8">
         <span class="lucide-arrow-left size-4" /> {{ l.course_title }}
       </router-link>
-      <Progress :value="l.progress" :label="`Hoàn thành ${l.progress}%`" size="sm" class="mb-4" />
+      <Progress :value="l.progress" :label="`Hoàn thành ${l.progress}%`" size="sm" class="progress-brand mb-4" />
       <div v-for="(ch, i) in l.chapters" :key="ch.name" class="mb-3">
         <div class="mb-1 px-2 text-xs font-semibold uppercase tracking-wide text-ink-gray-5">{{ i + 1 }}. {{ ch.title }}</div>
         <router-link
@@ -30,7 +30,7 @@
           </div>
           <Button
             :variant="l.completed ? 'subtle' : 'solid'"
-            :theme="l.completed ? 'green' : 'gray'"
+            :theme="l.completed ? 'green' : 'blue'"
             :icon-left="l.completed ? 'lucide-circle-check' : 'lucide-check'"
             :label="l.completed ? 'Đã hoàn thành' : 'Đánh dấu hoàn thành'"
             :loading="progress.loading"
@@ -51,15 +51,12 @@
           <h2 class="flex items-center gap-2 text-2xl font-semibold text-ink-gray-9">
             <span class="lucide-clipboard-pen size-5" /> Bài tập: {{ a.title }}
           </h2>
-          <Badge v-if="a.submission" :theme="a.submission.status === 'Graded' ? 'green' : 'blue'"
-            :label="a.submission.status === 'Graded' ? `Đã chấm: ${a.submission.score ?? '-'} điểm` : 'Đã nộp'" />
-          <Badge v-else theme="amber" label="Chưa nộp" />
+          <StatusBadge :submission="a.submission" />
         </div>
         <div class="lesson-content mb-4" v-html="a.question" />
         <Alert v-if="a.submission?.feedback" theme="green" title="Nhận xét của giảng viên" :description="a.submission.feedback" class="mb-4" />
-        <Button
+        <PrimaryButton
           v-if="a.submission?.status !== 'Graded'"
-          variant="solid"
           :icon-left="a.submission ? 'lucide-pencil' : 'lucide-send'"
           :label="a.submission ? 'Sửa bài nộp' : 'Nộp bài'"
           @click="openSubmit(a)"
@@ -67,9 +64,9 @@
       </div>
 
       <nav class="flex items-center justify-between gap-3">
-        <Button v-if="l.prev" variant="outline" icon-left="lucide-arrow-left" :label="l.prev.title" :route="{ name: 'Lesson', params: { course, lesson: l.prev.name } }" />
+        <Button v-if="l.prev" variant="outline" size="md" class="rounded-full" icon-left="lucide-arrow-left" :label="l.prev.title" :route="{ name: 'Lesson', params: { course, lesson: l.prev.name } }" />
         <span v-else />
-        <Button v-if="l.next" variant="solid" icon-right="lucide-arrow-right" :label="l.next.title" :route="{ name: 'Lesson', params: { course, lesson: l.next.name } }" />
+        <PrimaryButton v-if="l.next" icon-right="lucide-arrow-right" :label="l.next.title" :route="{ name: 'Lesson', params: { course, lesson: l.next.name } }" />
       </nav>
     </article>
 
@@ -85,7 +82,7 @@
       <template #actions>
         <div class="flex justify-end gap-2">
           <Button label="Huỷ" @click="dialog.open = false" />
-          <Button variant="solid" label="Nộp bài" :loading="submit.loading" @click="doSubmit" />
+          <PrimaryButton size="sm" label="Nộp bài" :loading="submit.loading" @click="doSubmit" />
         </div>
       </template>
     </Dialog>
@@ -96,8 +93,10 @@
 <script setup>
 import { computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
-import { Alert, Badge, Button, Dialog, ErrorMessage, LoadingText, Progress, Textarea, toast } from 'frappe-ui'
+import { Alert, Button, Dialog, ErrorMessage, LoadingText, Progress, Textarea, toast } from 'frappe-ui'
 import { errorText, useApi } from '../api'
+import PrimaryButton from '../components/PrimaryButton.vue'
+import StatusBadge from '../components/StatusBadge.vue'
 
 const route = useRoute()
 const course = computed(() => route.params.course)

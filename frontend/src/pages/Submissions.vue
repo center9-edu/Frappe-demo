@@ -27,7 +27,7 @@
             <td class="px-4 py-3 font-medium text-ink-gray-9">{{ s.assignment_title }}</td>
             <td class="px-4 py-3 text-ink-gray-7">{{ s.course_title }}</td>
             <td class="px-4 py-3">
-              <Badge :theme="s.status === 'Graded' ? 'green' : 'blue'" :label="s.status === 'Graded' ? 'Đã chấm' : 'Chờ chấm'" />
+              <StatusBadge :submission="s" />
             </td>
             <td class="px-4 py-3 text-ink-gray-7">{{ s.status === 'Graded' ? s.score : '—' }}</td>
             <td class="px-4 py-3 text-ink-gray-5">{{ formatDate(s.modified) }}</td>
@@ -40,8 +40,9 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { Badge, ErrorMessage, LoadingText } from 'frappe-ui'
+import { ErrorMessage, LoadingText } from 'frappe-ui'
 import { errorText, formatDate, useApi } from '../api'
+import StatusBadge from '../components/StatusBadge.vue'
 
 const router = useRouter()
 const subs = useApi('get_my_submissions')

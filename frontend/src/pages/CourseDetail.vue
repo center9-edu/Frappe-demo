@@ -3,8 +3,8 @@
   <div v-else-if="c" class="space-y-6">
     <Breadcrumbs :items="[{ label: 'Khoá học', route: { name: 'Courses' } }, { label: c.title }]" />
 
-    <section class="rounded-6 border border-outline-gray-2 bg-surface-base p-6">
-      <div class="flex flex-wrap items-start justify-between gap-6">
+    <section class="overflow-hidden rounded-7 border border-outline-gray-2 bg-gradient-to-br from-surface-blue-2 via-surface-base to-surface-base p-6 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-6">
         <div class="max-w-2xl space-y-3">
           <h1 class="text-8xl font-semibold text-ink-gray-9">{{ c.title }}</h1>
           <p class="text-xl text-ink-gray-6">{{ c.short_intro }}</p>
@@ -14,13 +14,11 @@
             <Badge v-if="c.instructor_name" theme="blue" :label="`Giảng viên: ${c.instructor_name}`" />
           </div>
         </div>
-        <div v-if="c.enrolled" class="w-full space-y-3 sm:w-64">
-          <Progress :value="c.progress" :label="`Hoàn thành ${c.progress}%`" size="md" />
-          <Button
+        <div v-if="c.enrolled" class="flex items-center gap-5">
+          <ProgressRing :value="c.progress" label="hoàn thành" />
+          <PrimaryButton
             v-if="c.next_lesson"
-            variant="solid"
             size="lg"
-            class="w-full"
             :label="c.progress ? 'Học tiếp' : 'Bắt đầu học'"
             icon-right="lucide-arrow-right"
             :route="{ name: 'Lesson', params: { course: c.name, lesson: c.next_lesson } }"
@@ -69,11 +67,11 @@
               <span class="lucide-users size-4" /> {{ b.student_count }} học viên
             </div>
             <Badge v-if="b.is_member" theme="green" label="Bạn đang trong lớp này" />
-            <Button
+            <PrimaryButton
               v-else
-              variant="solid"
               class="w-full"
               label="Ghi danh"
+              icon-left="lucide-user-plus"
               :loading="enroll.loading && enrolling === b.name"
               @click="doEnroll(b.name)"
             />
@@ -88,8 +86,10 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { Alert, Badge, Breadcrumbs, Button, ErrorMessage, LoadingText, Progress, toast } from 'frappe-ui'
+import { Alert, Badge, Breadcrumbs, ErrorMessage, LoadingText, toast } from 'frappe-ui'
 import { errorText, formatDate, useApi } from '../api'
+import PrimaryButton from '../components/PrimaryButton.vue'
+import ProgressRing from '../components/ProgressRing.vue'
 
 const route = useRoute()
 const course = useApi('get_course', { params: () => ({ course: route.params.course }), refetch: true })
