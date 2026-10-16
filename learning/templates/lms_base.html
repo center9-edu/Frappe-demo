@@ -1,0 +1,36 @@
+{% extends "templates/base.html" %}
+
+{%- block style %}
+{{ super() }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/learning/css/learning.css">
+{%- endblock -%}
+
+{%- block navbar -%}
+<header class="lx-nav">
+	<div class="lx-container lx-nav-inner">
+		<a class="lx-brand" href="/courses"><span class="lx-brand-mark">L</span>LearnHub</a>
+		<nav class="lx-nav-links">
+			<a href="/courses">{{ _("Khoá học") }}</a>
+			{% if frappe.session.user == "Guest" %}
+			<a class="lx-btn lx-btn-sm" href="/login">{{ _("Đăng nhập") }}</a>
+			{% else %}
+			<a class="lx-btn lx-btn-sm" href="/lms">{{ _("Vào học") }}</a>
+			<a href="/desk">{{ _("Quản trị") }}</a>
+			<a class="lx-avatar" href="/me" title="{{ frappe.session.user | e }}">{{ (frappe.get_fullname(frappe.session.user) or "?")[0] | upper }}</a>
+			{% endif %}
+		</nav>
+	</div>
+</header>
+{%- endblock -%}
+
+{% block content %}
+<main class="lx-main">{% block lx_content %}{% endblock %}</main>
+{% endblock %}
+
+{%- block footer -%}
+<footer class="lx-footer">
+	<div class="lx-container">© {{ frappe.utils.nowdate()[:4] }} LearnHub · {{ _("Xây dựng trên Frappe") }}</div>
+</footer>
+{%- endblock -%}

@@ -1,0 +1,55 @@
+{% extends "templates/lms_base.html" %}
+
+{% block lx_content %}
+<section class="lx-hero lx-hero-course">
+	<div class="lx-container">
+		<a class="lx-back" href="/courses">← {{ _("Tất cả khoá học") }}</a>
+		<h1>{{ title | e }}</h1>
+		{% if short_intro %}<p class="lx-hero-sub">{{ short_intro | e }}</p>{% endif %}
+		<div class="lx-stats">
+			<span><b>{{ chapters | length }}</b> {{ _("chương") }}</span>
+			<span><b>{{ lessons | length }}</b> {{ _("bài học") }}</span>
+			<span><b>{{ assignment_count }}</b> {{ _("bài tập") }}</span>
+			{% if instructor_name %}<span>{{ _("Giảng viên") }}: <b>{{ instructor_name | e }}</b></span>{% endif %}
+		</div>
+		{% if lessons %}
+		<a class="lx-btn" href="/{{ route | e }}/learn/{{ lessons[0].name | e }}">{{ _("Bắt đầu học") }} →</a>
+		{% endif %}
+	</div>
+</section>
+
+<section class="lx-container lx-section lx-two-col">
+	<div>
+		{% if description %}
+		<h2>{{ _("Giới thiệu") }}</h2>
+		<div class="lx-prose">{{ description }}</div>
+		{% endif %}
+
+		<h2>{{ _("Nội dung khoá học") }}</h2>
+		{% for ch in chapters %}
+		<details class="lx-chapter" {% if loop.first %}open{% endif %}>
+			<summary><span class="lx-chapter-no">{{ loop.index }}</span>{{ ch.title | e }}<small>{{ ch.lessons | length }} {{ _("bài") }}</small></summary>
+			<ol>
+				{% for l in ch.lessons %}
+				<li><a href="/{{ route | e }}/learn/{{ l.name | e }}">{{ l.title | e }}</a></li>
+				{% endfor %}
+			</ol>
+		</details>
+		{% else %}
+		<p class="lx-empty">{{ _("Chưa có chương nào.") }}</p>
+		{% endfor %}
+	</div>
+
+	<aside class="lx-panel">
+		<h3>{{ _("Lớp sắp khai giảng") }}</h3>
+		{% for b in batches %}
+		<div class="lx-batch">
+			<b>{{ b.title | e }}</b>
+			<span>{{ frappe.format(b.start_date, "Date") }}{% if b.end_date %} – {{ frappe.format(b.end_date, "Date") }}{% endif %}</span>
+		</div>
+		{% else %}
+		<p class="lx-empty">{{ _("Chưa có lớp nào.") }}</p>
+		{% endfor %}
+	</aside>
+</section>
+{% endblock %}

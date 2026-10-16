@@ -53,3 +53,7 @@ jspm_packages/
 
 # Aider AI Chat
 .aider*
+
+# Frappe UI frontend build output
+learning/public/frontend/
+learning/www/lms.html

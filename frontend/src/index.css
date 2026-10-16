@@ -1,0 +1,9 @@
+@import 'frappe-ui/style.css';
+
+.lesson-content { @apply text-base leading-7 text-ink-gray-8; }
+.lesson-content h1, .lesson-content h2, .lesson-content h3 { @apply mt-6 mb-2 font-semibold text-ink-gray-9; }
+.lesson-content p { @apply my-3; }
+.lesson-content ul { @apply my-3 list-disc pl-6; }
+.lesson-content ol { @apply my-3 list-decimal pl-6; }
+.lesson-content pre { @apply my-4 overflow-x-auto rounded-4 bg-surface-gray-2 p-4 text-sm; }
+.lesson-content a { @apply text-ink-blue-link underline; }

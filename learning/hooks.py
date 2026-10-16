@@ -71,7 +71,12 @@ use_json_request_body = True
 # ----------
 
 # application home page (will override Website Settings)
-# home_page = "login"
+home_page = "courses"
+
+website_route_rules = [
+	{"from_route": "/course/<course>/learn/<lesson>", "to_route": "learn"},
+	{"from_route": "/lms/<path:app_path>", "to_route": "lms"},
+]
 
 # website user home page (by Role)
 # role_home_page = {
@@ -304,4 +309,3 @@ require_type_annotated_api_methods = True
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

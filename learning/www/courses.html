@@ -1,0 +1,35 @@
+{% extends "templates/lms_base.html" %}
+
+{% block lx_content %}
+<section class="lx-hero">
+	<div class="lx-container">
+		<p class="lx-eyebrow">{{ _("Học theo cách của bạn") }}</p>
+		<h1>{{ _("Khám phá các khoá học") }}</h1>
+		<p class="lx-hero-sub">{{ _("Lộ trình rõ ràng theo chương, bài học ngắn gọn và bài tập thực hành sau mỗi phần.") }}</p>
+	</div>
+</section>
+
+<section class="lx-container lx-section">
+	{% if courses %}
+	<div class="lx-grid">
+		{% for c in courses %}
+		<a class="lx-card" href="/{{ c.route | e }}">
+			<div class="lx-card-cover" {% if c.image %}style="background-image:url('{{ c.image | e }}')"{% endif %}>
+				{% if not c.image %}<span>{{ c.title[0] | upper }}</span>{% endif %}
+			</div>
+			<div class="lx-card-body">
+				<h3>{{ c.title | e }}</h3>
+				<p>{{ (c.short_intro or "") | e }}</p>
+				<div class="lx-meta">
+					<span>{{ c.lesson_count }} {{ _("bài học") }}</span>
+					{% if c.instructor_name %}<span>{{ c.instructor_name | e }}</span>{% endif %}
+				</div>
+			</div>
+		</a>
+		{% endfor %}
+	</div>
+	{% else %}
+	<p class="lx-empty">{{ _("Chưa có khoá học nào được xuất bản.") }}</p>
+	{% endif %}
+</section>
+{% endblock %}

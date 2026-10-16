@@ -1,0 +1,38 @@
+{% extends "templates/lms_base.html" %}
+
+{% block lx_content %}
+<div class="lx-learn">
+	<aside class="lx-sidebar">
+		<a class="lx-back" href="/{{ course.route | e }}">← {{ course.title | e }}</a>
+		{% for ch in chapters %}
+		<div class="lx-side-chapter">{{ loop.index }}. {{ ch.title | e }}</div>
+		{% for l in ch.lessons %}
+		<a class="lx-side-lesson {% if l.name == lesson.name %}active{% endif %}" href="/{{ course.route | e }}/learn/{{ l.name | e }}">{{ l.title | e }}</a>
+		{% endfor %}
+		{% endfor %}
+	</aside>
+
+	<article class="lx-lesson">
+		<p class="lx-eyebrow">{{ _("Bài") }} {{ position }}</p>
+		<h1>{{ lesson.title | e }}</h1>
+
+		{% if lesson.video_url %}
+		<a class="lx-btn lx-btn-ghost" href="{{ lesson.video_url | e }}" target="_blank" rel="noopener">▶ {{ _("Xem video") }}</a>
+		{% endif %}
+
+		<div class="lx-prose">{{ lesson.content or "" }}</div>
+
+		{% for a in assignments %}
+		<div class="lx-assignment">
+			<div class="lx-assignment-head"><b>{{ _("Bài tập") }}: {{ a.title | e }}</b><span class="lx-tag">{{ a.submission_type | e }}</span></div>
+			<div class="lx-prose">{{ a.question }}</div>
+		</div>
+		{% endfor %}
+
+		<nav class="lx-pager">
+			{% if prev %}<a href="/{{ course.route | e }}/learn/{{ prev.name | e }}">← {{ prev.title | e }}</a>{% else %}<span></span>{% endif %}
+			{% if next %}<a class="lx-btn" href="/{{ course.route | e }}/learn/{{ next.name | e }}">{{ next.title | e }} →</a>{% endif %}
+		</nav>
+	</article>
+</div>
+{% endblock %}
