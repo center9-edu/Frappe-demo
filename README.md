@@ -52,12 +52,32 @@ Sau đó mở:
 
 ## Phát triển
 
+### Chạy backend + frontend bằng một lệnh
+
+`bench start` dùng [honcho](https://honcho.readthedocs.io) để chạy mọi tiến trình khai báo trong `Procfile` của bench. Bạn thêm Vite dev server vào đó (làm một lần, `Procfile` nằm ở gốc bench, không thuộc repo này):
+
 ```bash
-bench start                              # luôn cần: web server, redis, worker...
+cd my-bench
+echo 'lms_ui: cd apps/learning/frontend && yarn dev' >> Procfile
 
-# Sửa giao diện /lms có hot reload (terminal thứ 2)
-cd apps/learning/frontend && yarn dev    # Vite chuyển tiếp API sang :8000
+# Cho phép request POST từ Vite dev (:8080) đi qua kiểm tra CSRF. Chỉ dùng ở local
+bench --site mysite.localhost set-config allowed_referrers '["http://localhost:8080"]' --parse
 
+bench start
+```
+
+| URL | Phục vụ bởi | Khi nào dùng |
+|---|---|---|
+| http://localhost:8080/lms | Vite dev (`lms_ui`), có hot reload | Đang sửa file `.vue` |
+| http://localhost:8000/lms | Frappe, dùng bản đã build | Xem bản giống production |
+
+Đăng nhập một lần ở `:8000` là dùng được cho cả `:8080`, vì cookie gắn theo `localhost`, không phân biệt cổng.
+
+`bench setup procfile` sẽ ghi đè `Procfile`. Nếu chạy lệnh đó, bạn phải thêm lại dòng `lms_ui`.
+
+### Lệnh khác
+
+```bash
 # Build lại /lms sau khi sửa .vue (nếu không dùng yarn dev)
 bench build --app learning
 

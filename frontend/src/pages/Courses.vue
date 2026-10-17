@@ -26,8 +26,9 @@ import { computed, ref } from 'vue'
 import { ErrorMessage, Skeleton, TabButtons } from 'frappe-ui'
 import { errorText, useApi } from '../api'
 import CourseCard from '../components/CourseCard.vue'
+import { user } from '../session'
 
-const firstName = (window.user?.full_name || '').split(' ').pop()
+const firstName = computed(() => user.full_name.split(' ').pop())
 const tab = ref('all')
 const tabs = [
   { label: 'Tất cả', value: 'all' },

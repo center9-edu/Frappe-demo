@@ -27,9 +27,7 @@
 
 <script setup>
 import { Avatar, Button, FrappeUIProvider } from 'frappe-ui'
-
-// Injected by www/lms.py through the `boot` context (see jinjaBootData in frappe-ui/vite)
-const user = window.user || { full_name: 'Dev' }
+import { user } from './session'
 
 async function logout() {
   await fetch('/api/method/logout', { method: 'POST', headers: { 'X-Frappe-CSRF-Token': window.csrf_token } })
