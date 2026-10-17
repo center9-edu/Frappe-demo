@@ -66,7 +66,7 @@
  "has_web_view": 1,
  "is_published_field": "published",
  "links": [],
- "modified": "2026-10-15 23:10:15.157836",
+ "modified": "2026-10-16 21:12:21.026265",
  "modified_by": "Administrator",
  "module": "Learning",
  "name": "Course",
@@ -82,6 +82,15 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Instructor",
    "write": 1
   }
  ],

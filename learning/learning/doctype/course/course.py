@@ -41,8 +41,14 @@ class Course(WebsiteGenerator):
 
 
 def get_outline(course):
-	chapters = frappe.get_all("Chapter", {"course": course}, ["name", "title"], order_by="creation")
-	lessons = frappe.get_all("Lesson", {"course": course}, ["name", "chapter", "title"], order_by="creation")
+	order = "position asc, creation asc"
+	chapters = frappe.get_all("Chapter", {"course": course}, ["name", "title"], order_by=order)
+	lessons = frappe.get_all("Lesson", {"course": course}, ["name", "chapter", "title"], order_by=order)
 	for ch in chapters:
 		ch.lessons = [l for l in lessons if l.chapter == ch.name]
 	return chapters
+
+
+def next_position(doctype, filters):
+	last = frappe.get_all(doctype, filters, pluck="position", order_by="position desc", limit=1)
+	return (last[0] if last else 0) + 1

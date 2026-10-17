@@ -1,8 +1,9 @@
 # Copyright (c) 2026, dain and contributors
 # For license information, please see license.txt
 
-# import frappe
 from frappe.model.document import Document
+
+from learning.learning.doctype.course.course import next_position
 
 
 class Lesson(Document):
@@ -17,8 +18,13 @@ class Lesson(Document):
 		chapter: DF.Link
 		content: DF.TextEditor | None
 		course: DF.Link | None
+		position: DF.Int
 		title: DF.Data
 		video_url: DF.Data | None
 	# end: auto-generated types
 
 	_DOCTYPE_NAME = "Lesson"
+
+	def before_insert(self):
+		if not self.position:
+			self.position = next_position("Lesson", {"chapter": self.chapter})

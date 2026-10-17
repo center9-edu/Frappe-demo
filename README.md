@@ -82,8 +82,10 @@ bench start
 bench build --app learning
 
 # Test
-bench --site mysite.localhost set-config allow_tests true
-bench --site mysite.localhost run-tests --app learning
+# Test: chạy trên một site RIÊNG. Frappe tạo và giữ lại dữ liệu test (test@example.com, test-course...)
+bench new-site test.localhost --install-app learning
+bench --site test.localhost set-config allow_tests true
+bench --site test.localhost run-tests --app learning
 ```
 
 Khi bật `developer_mode`, mọi chỉnh sửa DocType trên Desk sẽ được ghi ngược vào file JSON trong `learning/learning/doctype/`. Nhớ commit các file đó.

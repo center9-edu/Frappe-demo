@@ -14,7 +14,8 @@
   "answer",
   "grading_section",
   "score",
-  "feedback"
+  "feedback",
+  "graded_by"
  ],
  "fields": [
   {
@@ -23,6 +24,7 @@
    "in_list_view": 1,
    "label": "Assignment",
    "options": "Assignment",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -32,6 +34,7 @@
    "in_standard_filter": 1,
    "label": "Student",
    "options": "User",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -56,6 +59,7 @@
    "fieldname": "answer",
    "fieldtype": "Long Text",
    "label": "Answer",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -73,11 +77,18 @@
    "fieldname": "feedback",
    "fieldtype": "Small Text",
    "label": "Feedback"
+  },
+  {
+   "fieldname": "graded_by",
+   "fieldtype": "Link",
+   "label": "Graded By",
+   "options": "User",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-10-16 02:57:55.734647",
+ "modified": "2026-10-16 21:12:21.558860",
  "modified_by": "Administrator",
  "module": "Learning",
  "name": "Assignment Submission",
@@ -93,6 +104,14 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Instructor",
    "write": 1
   }
  ],

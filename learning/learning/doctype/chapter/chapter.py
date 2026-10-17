@@ -1,8 +1,9 @@
 # Copyright (c) 2026, dain and contributors
 # For license information, please see license.txt
 
-# import frappe
 from frappe.model.document import Document
+
+from learning.learning.doctype.course.course import next_position
 
 
 class Chapter(Document):
@@ -15,7 +16,12 @@ class Chapter(Document):
 		from frappe.types import DF
 
 		course: DF.Link
+		position: DF.Int
 		title: DF.Data
 	# end: auto-generated types
 
 	_DOCTYPE_NAME = "Chapter"
+
+	def before_insert(self):
+		if not self.position:
+			self.position = next_position("Chapter", {"course": self.course})

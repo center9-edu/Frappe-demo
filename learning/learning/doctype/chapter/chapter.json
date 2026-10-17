@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
+  "position",
   "course"
  ],
  "fields": [
@@ -26,11 +27,18 @@
    "label": "Course",
    "options": "Course",
    "reqd": 1
+  },
+  {
+   "description": "Th\u1ee9 t\u1ef1 hi\u1ec3n th\u1ecb, s\u1ed1 nh\u1ecf \u0111\u1ee9ng tr\u01b0\u1edbc. \u0110\u1ec3 tr\u1ed1ng khi t\u1ea1o m\u1edbi s\u1ebd t\u1ef1 x\u1ebfp cu\u1ed1i.",
+   "fieldname": "position",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Position"
   }
  ],
  "grid_page_length": 50,
  "links": [],
- "modified": "2026-10-15 23:08:08.546551",
+ "modified": "2026-10-16 21:12:21.132854",
  "modified_by": "Administrator",
  "module": "Learning",
  "name": "Chapter",
@@ -47,12 +55,22 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Instructor",
+   "write": 1
   }
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
  "show_title_field_in_link": 1,
- "sort_field": "creation",
+ "sort_field": "position",
  "sort_order": "ASC",
  "states": [],
  "title_field": "title"

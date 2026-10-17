@@ -73,6 +73,12 @@ use_json_request_body = True
 # application home page (will override Website Settings)
 home_page = "courses"
 
+# Staff land in Desk after login; home_page above would otherwise send them to the public site
+role_home_page = {
+	"Instructor": "desk/learning/assignment-submission",
+	"System Manager": "desk",
+}
+
 website_route_rules = [
 	{"from_route": "/course/<course>/learn/<lesson>", "to_route": "learn"},
 	{"from_route": "/lms/<path:app_path>", "to_route": "lms"},

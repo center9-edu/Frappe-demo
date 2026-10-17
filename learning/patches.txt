@@ -4,6 +4,7 @@
 
 [post_model_sync]
 # Patches added in this section will be executed after doctypes are migrated
+learning.patches.v0_1.backfill_positions
 
 [post_fixture_sync]
 # Patches added in this section will be executed after fixtures and customizations
